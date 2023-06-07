@@ -15,11 +15,13 @@ export interface SeeCoffeeShops_seeCoffeeShops_user {
 
 export interface SeeCoffeeShops_seeCoffeeShops_photos {
   __typename: "CoffeeShopPhoto";
+  id: number;
   url: string;
 }
 
 export interface SeeCoffeeShops_seeCoffeeShops_categories {
   __typename: "Category";
+  id: number;
   name: string;
   slug: string;
 }

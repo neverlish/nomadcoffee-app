@@ -3,8 +3,17 @@ import React from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import styled from "styled-components/native";
 import { SeeCoffeeShops_seeCoffeeShops } from "../__generated/SeeCoffeeShops";
+import { Image, Text } from "react-native";
 
-const Container = styled.View``;
+const Container = styled.View`
+  border: 1px solid white;
+  display: flex;
+  width: 200px;
+  flex-direction: column;
+  align-self: center;
+  align-items: center;
+  margin-bottom: 20px;
+`;
 const Header = styled.TouchableOpacity`
   padding: 10px;
   flex-direction: row;
@@ -17,31 +26,41 @@ const UserAvatar = styled.Image`
   border-radius: 12.5;
 `;
 
-const Username = styled.Text`
+const WhiteText = styled.Text`
   color: white;
   font-weight: 600;
 `;
-const Actions = styled.View``;
-const Action = styled.TouchableOpacity``;
-const Caption = styled.View``;
+const Photos = styled.View`
+  display: flex;
+`;
+const Categories = styled.View`
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+`;
+const Category = styled.Text`
+  color: white;
+`;
 
-function CoffeeShop({ id, user }: SeeCoffeeShops_seeCoffeeShops) {
+function CoffeeShop({ id, user, name, photos, categories }: SeeCoffeeShops_seeCoffeeShops) {
   const navigation = useNavigation<NavigationProp<{ Profile: undefined }>>();
   return (
     <Container>
       <Header onPress={() => navigation.navigate("Profile")}>
-        {user.avatarURL && <UserAvatar resizeMode="cover" source={{ uri: user.avatarURL }} />}
-        <Username>{user.username}</Username>
-      </Header>
-      <Actions>
-        <Action />
-        <Action />
-      </Actions>
-      <Caption>
         <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
-          <Username>{user.username}</Username>
+          <WhiteText>{user.username}</WhiteText>
+          {user.avatarURL && <UserAvatar resizeMode="cover" source={{ uri: user.avatarURL }} />}
         </TouchableOpacity>
-      </Caption>
+      </Header>
+      <WhiteText>
+        {name}
+      </WhiteText>
+      <Photos>
+        {photos.map((photo) => <Image key={photo.id} source={{ uri: photo.url }} />)}
+      </Photos>
+      <Categories>
+        {categories.map((c) => <Category key={c.id}>{c.name}</Category>)}
+      </Categories>
     </Container>
   );
 }

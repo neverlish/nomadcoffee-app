@@ -1,9 +1,9 @@
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import React from "react";
+import { Image } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import styled from "styled-components/native";
-import { SeeCoffeeShops_seeCoffeeShops } from "../__generated/SeeCoffeeShops";
-import { Image, Text } from "react-native";
+import { CoffeeShopFragment } from "../__generated/CoffeeShopFragment";
 
 const Container = styled.View`
   border: 1px solid white;
@@ -42,7 +42,7 @@ const Category = styled.Text`
   color: white;
 `;
 
-function CoffeeShop({ id, user, name, photos, categories }: SeeCoffeeShops_seeCoffeeShops) {
+function CoffeeShop({ id, user, name, photos, categories }: CoffeeShopFragment) {
   const navigation = useNavigation<NavigationProp<{ Profile: undefined }>>();
   return (
     <Container>

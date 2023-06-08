@@ -1,36 +1,24 @@
 import { gql, useQuery } from "@apollo/client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { FlatList } from "react-native";
 import { SeeCoffeeShops } from "../__generated/SeeCoffeeShops";
 import CoffeeShop from "../components/CoffeeShop";
 import ScreenLayout from "../components/ScreenLayout";
+import { COFFEE_SHOP_FRAGMENT } from "../fragments";
 
 const FEED_QUERY = gql`
   query SeeCoffeeShops($page: Int!) {
     seeCoffeeShops(page: $page) {
-      id
-      name
-      user {
-        username
-        avatarURL
-      }
-      photos {
-        id
-        url
-      }
-      categories {
-        id
-        name
-        slug
-      }
+      ...CoffeeShopFragment
     }
   }
+  ${COFFEE_SHOP_FRAGMENT}
 `;
 
 export default function Feed() {
   const [page, setPage] = useState(1);
   const [refreshing, setRefreshing] = useState(false);
-  const { data, loading, refetch, fetchMore } = useQuery<SeeCoffeeShops>(FEED_QUERY, { variables: { page: 1 }});
+  const { data, error, loading, refetch, fetchMore } = useQuery<SeeCoffeeShops>(FEED_QUERY, { variables: { page: 1 }});
   const refresh = async () => {
     setRefreshing(true);
     await refetch();  

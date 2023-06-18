@@ -6,6 +6,7 @@ import AuthLayout from "../components/auth/AuthLayout";
 import { TextInput } from "../components/auth/AuthShared";
 import { logUserIn } from "../apollo";
 import { login } from "../__generated/login";
+import { NavigationProp } from "@react-navigation/native";
 
 const LOGIN_MUTATION = gql`
   mutation login($username: String!, $password: String!) {
@@ -17,7 +18,7 @@ const LOGIN_MUTATION = gql`
   }
 `;
 
-export default function Login({ params }: { params?: { password: string, username: string }}) {
+export default function Login({ params, navigation }: { params?: { password: string, username: string }, navigation: NavigationProp<any>}) {
   const { register, handleSubmit, setValue, watch } = useForm({
     defaultValues: {
       password: params?.password,
@@ -46,6 +47,7 @@ export default function Login({ params }: { params?: { password: string, usernam
           ...data,
         },
       });
+      navigation.navigate("Feed");
     }
   };
 

@@ -1,7 +1,7 @@
 import { gql, useQuery, useReactiveVar } from "@apollo/client";
 import React from "react";
 import { Image, Text, View } from "react-native";
-import { isLoggedInVar } from "../apollo";
+import { isLoggedInVar, logUserOut } from "../apollo";
 import { me } from "../__generated/me";
 import styled from "styled-components/native";
 import { TouchableOpacity } from "react-native-gesture-handler";

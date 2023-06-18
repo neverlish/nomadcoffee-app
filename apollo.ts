@@ -6,6 +6,7 @@ import {
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { createUploadLink } from "apollo-upload-client";
 
 export const isLoggedInVar = makeVar(false);
 export const tokenVar = makeVar<string|null>("");
@@ -24,10 +25,6 @@ export const logUserOut = async () => {
   tokenVar(null);
 };
 
-const httpLink = createHttpLink({
-  uri: "https://instaclone-backend-neverlish.herokuapp.com/graphql",
-});
-
 const authLink = setContext((_, { headers }) => {
   return {
     headers: {
@@ -37,8 +34,12 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 
+const uploadHttpLink = createUploadLink({
+  uri: "https://instaclone-backend-neverlish.herokuapp.com/graphql",
+});
+
 const client = new ApolloClient({
-  link: authLink.concat(httpLink),
+  link: authLink.concat(uploadHttpLink),
   cache: new InMemoryCache(),
 });
 export default client;

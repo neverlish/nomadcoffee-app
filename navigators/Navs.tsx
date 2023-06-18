@@ -1,13 +1,16 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
 import TabIcon from "../components/nav/TabIcon";
 import SharedStackNav from "./SharedStackNav";
+import { View } from "react-native";
+import UploadNav from "./UploadNav";
+import { useReactiveVar } from "@apollo/client";
+import { isLoggedInVar } from "../apollo";
 
 const Tabs = createBottomTabNavigator();
-const Stack = createStackNavigator();
 
 export default function Navs() {
+  const isLoggedIn = useReactiveVar(isLoggedInVar);
   return (
     <Tabs.Navigator
       screenOptions={{
@@ -18,7 +21,7 @@ export default function Navs() {
       }}
     >
       <Tabs.Screen
-        name="Feed"
+        name="FeedTab"
         options={{
           tabBarIcon: ({ focused, color, size }) => (
             <TabIcon iconName={"home"} color={color} focused={focused} />
@@ -27,6 +30,17 @@ export default function Navs() {
       >
         {() => <SharedStackNav screenName="Feed" />}
       </Tabs.Screen>
+      {isLoggedIn && 
+        <Tabs.Screen
+          name="CameraTab"
+          component={UploadNav}
+          options={{
+            tabBarIcon: ({ focused, color, size }) => (
+              <TabIcon iconName={"camera"} color={color} focused={focused} />
+            ),
+          }}
+        />}
+      
       <Tabs.Screen
         name="Search"
         options={{
@@ -38,7 +52,7 @@ export default function Navs() {
         {() => <SharedStackNav screenName="Search" />}
       </Tabs.Screen>
       <Tabs.Screen
-        name="Me"
+        name="MeTab"
         options={{
           tabBarIcon: ({ focused, color, size }) => (
             <TabIcon iconName={"person"} color={color} focused={focused} />
